@@ -103,11 +103,13 @@
       let questionText = '';
       let correctAnswer = '';
       if (askEnglish) {
-        questionText = quiz[1]; // 뜻
-        correctAnswer = quiz[0]; // 영어
+        // 뜻 -> 영어 문제
+        questionText = quiz[2]; // 3열: 뜻
+        correctAnswer = quiz[1]; // 2열: 영어
       } else {
-        questionText = quiz[0]; // 영어
-        correctAnswer = quiz[1]; // 뜻
+        // 영어 -> 뜻 문제
+        questionText = quiz[1]; // 2열: 영어
+        correctAnswer = quiz[2]; // 3열: 뜻
       }
 
       // 상태 저장
@@ -170,7 +172,7 @@
           return;
         }
         // 빈 행 제거
-        wordList = results.data.filter(row => row[0] && row[1]);
+        wordList = results.data.filter(row => row[1] && row[2]); // 영어, 뜻 있는 행만
         wordList = pickQuizWords(wordList);
 
         document.getElementById('loading').style.display = 'none';
