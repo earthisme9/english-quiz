@@ -103,13 +103,11 @@
       let questionText = '';
       let correctAnswer = '';
       if (askEnglish) {
-        // 뜻 -> 영어 문제
-        questionText = quiz[2]; // 3열: 뜻
-        correctAnswer = quiz[1]; // 2열: 영어
+        questionText = quiz[1]; // 뜻
+        correctAnswer = quiz[0]; // 영어
       } else {
-        // 영어 -> 뜻 문제
-        questionText = quiz[1]; // 2열: 영어
-        correctAnswer = quiz[2]; // 3열: 뜻
+        questionText = quiz[0]; // 영어
+        correctAnswer = quiz[1]; // 뜻
       }
 
       // 상태 저장
@@ -171,8 +169,11 @@
           document.getElementById('loading').innerText = '단어 데이터가 없습니다.';
           return;
         }
-        // 빈 행 제거
-        wordList = results.data.filter(row => row[1] && row[2]); // 영어, 뜻 있는 행만
+        // 학생 이름 컬럼 제외, 영어(1), 뜻(2)만 뽑아서 wordList 생성
+        wordList = results.data
+          .filter(row => row[1] && row[2])
+          .map(row => [row[1], row[2]]);
+
         wordList = pickQuizWords(wordList);
 
         document.getElementById('loading').style.display = 'none';
